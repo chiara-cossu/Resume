@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverLifeCycleSetting {
 	
@@ -16,12 +17,17 @@ public class DriverLifeCycleSetting {
 	
 	@BeforeAll
 	public static void beforeAll() { 
-		WebDriverManager.chromedriver().setup(); 
+		WebDriverManager.chromedriver().setup();
 	}
 	
 	@BeforeEach
 	void beforeEach() { 
-		driver = new ChromeDriver();
+		// disable browser popup
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless");
+		driver = new ChromeDriver(options);
+		
+		//driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 	
